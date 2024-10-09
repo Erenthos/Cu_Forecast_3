@@ -9,12 +9,13 @@ st.title('Price Forecasting with Variance')
 
 # Sample data (you can replace this with actual data)
 data = {
-    'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+    'Month': ['Jan 2023', 'Feb 2023', 'Mar 2023', 'Apr 2023', 'May 2023', 'Jun 2023', 'Jul 2023'],
     'Actual_Price': [774.4, 758.7, 784.95, 743.4, 703.55, 705.95, 745.15]
 }
 
 # Convert to DataFrame
 df = pd.DataFrame(data)
+df['Month'] = pd.to_datetime(df['Month'])  # Convert to datetime
 df['Month_Number'] = np.arange(1, len(df) + 1)
 
 # Linear Regression Model
@@ -30,13 +31,17 @@ df['Predicted_Price'] = model.predict(X)
 st.sidebar.header('Forecast Settings')
 num_months = st.sidebar.slider('Select number of months to forecast:', 1, 12, 6)
 
+# Generate future month labels
+last_month = df['Month'].iloc[-1]  # Get the last month in the DataFrame
+future_months = [(last_month + pd.DateOffset(months=i)).strftime('%b %Y') for i in range(1, num_months + 1)]
+
 # Predict future prices
-future_months = np.arange(len(df) + 1, len(df) + 1 + num_months).reshape(-1, 1)
-predicted_future_prices = model.predict(future_months)
+future_month_numbers = np.arange(len(df) + 1, len(df) + 1 + num_months).reshape(-1, 1)
+predicted_future_prices = model.predict(future_month_numbers)
 
 # Create future dataframe
 future_df = pd.DataFrame({
-    'Month_Number': np.arange(len(df) + 1, len(df) + 1 + num_months),
+    'Month': future_months,
     'Predicted_Price': predicted_future_prices
 })
 
@@ -60,12 +65,11 @@ st.write(future_df)
 # Plot actual vs predicted prices
 st.subheader('Price Forecast Visualization')
 fig, ax = plt.subplots(figsize=(8, 5))
-ax.plot(df['Month'], df['Actual_Price'], label='Actual Price', marker='o')
-ax.plot(df['Month'], df['Predicted_Price'], label='Predicted Price', linestyle='--', marker='x')
+ax.plot(df['Month'].dt.strftime('%b %Y'), df['Actual_Price'], label='Actual Price', marker='o')
+ax.plot(df['Month'].dt.strftime('%b %Y'), df['Predicted_Price'], label='Predicted Price', linestyle='--', marker='x')
 
 # Plot future predicted prices
-future_month_labels = ['Month ' + str(i) for i in future_df['Month_Number']]
-ax.plot(future_month_labels, future_df['Predicted_Price'], label='Future Forecast', linestyle='-.', marker='s', color='red')
+ax.plot(future_months, future_df['Predicted_Price'], label='Future Forecast', linestyle='-.', marker='s', color='red')
 
 # Make the x-axis scalable to avoid label overlap
 plt.xticks(rotation=45, ha='right')
@@ -87,4 +91,4 @@ st.write(df[['Month', 'Actual_Price', 'Predicted_Price', 'Variance (%)']])
 # Display variance table for future data (if actual values were provided)
 if 'Variance (%)' in future_df.columns:
     st.subheader('Variance between Actual and Predicted Prices (Forecasted Data)')
-    st.write(future_df[['Month_Number', 'Actual_Price', 'Predicted_Price', 'Variance (%)']])
+    st.write(future_df[['Month', 'Actual_Price', 'Predicted_Price', 'Variance (%)']])

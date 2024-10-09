@@ -91,6 +91,6 @@ st.subheader('Variance between Actual and Predicted Prices (Historical Data)')
 st.write(df[['Month', 'Actual_Price', 'Predicted_Price', 'Variance (%)']])
 
 # Display variance table for future data (if actual values were provided)
-if 'Variance (%)' in future_df.columns:
-    st.subheader('Variance between Actual and Predicted Prices (Forecasted Data)')
-    st.write(future_df[['Month', 'Actual_Price', 'Predicted_Price', 'Variance (%)']])
+#if 'Variance (%)' in future_df.columns:
+ #   st.subheader('Variance between Actual and Predicted Prices (Forecasted Data)')
+  #  st.write(future_df[['Month', 'Actual_Price', 'Predicted_Price', 'Variance (%)']])

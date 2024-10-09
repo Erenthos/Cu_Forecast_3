@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
 # Title of the app
-st.title('Copper Price Forecasting with Variance')
+st.title('Copper Price Forecasting with Variance (using LinearRegression Algorithm)')
 
 # Sample data (you can replace this with actual data)
 data = {

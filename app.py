@@ -75,8 +75,8 @@ ax.plot(future_months, future_df['Predicted_Price'], label='Future Forecast', li
 
 # Make the x-axis scalable to avoid label overlap
 plt.xticks(rotation=45, ha='right')
-ax.set_xlabel('Month')
-ax.set_ylabel('Price')
+ax.set_xlabel('Month/Year')
+ax.set_ylabel('Price (INR/KG)')
 ax.set_title('Actual vs Predicted Prices')
 ax.legend()
 

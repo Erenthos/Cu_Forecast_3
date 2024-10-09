@@ -5,7 +5,7 @@ from sklearn.linear_model import LinearRegression
 import matplotlib.pyplot as plt
 
 # Title of the app
-st.title('Price Forecasting with Variance')
+st.title('Copper Price Forecasting with Variance')
 
 # Sample data (you can replace this with actual data)
 data = {
@@ -64,7 +64,9 @@ st.write(future_df)
 
 # Plot actual vs predicted prices
 st.subheader('Price Forecast Visualization')
-fig, ax = plt.subplots(figsize=(8, 5))
+fig, ax = plt.subplots(figsize=(10, 5))
+
+# Plot historical data
 ax.plot(df['Month'].dt.strftime('%b %Y'), df['Actual_Price'], label='Actual Price', marker='o')
 ax.plot(df['Month'].dt.strftime('%b %Y'), df['Predicted_Price'], label='Predicted Price', linestyle='--', marker='x')
 

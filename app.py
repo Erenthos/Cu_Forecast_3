@@ -29,7 +29,7 @@ df['Predicted_Price'] = model.predict(X)
 
 # Input: Number of months to forecast
 st.sidebar.header('Forecast Settings')
-num_months = st.sidebar.slider('Select number of months to forecast:', 1, 12, 6)
+num_months = st.sidebar.slider('Select number of months to forecast:', 1, 3, 3)
 
 # Generate future month labels
 last_month = df['Month'].iloc[-1]  # Get the last month in the DataFrame
